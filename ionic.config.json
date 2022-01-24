@@ -1,0 +1,7 @@
+{
+  "name": "03_ListaObjetos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

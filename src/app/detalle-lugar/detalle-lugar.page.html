@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/lugares"> </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{lugar.Titulo}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="notificacionEliminar()">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles de {{lugar.Titulo}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col> <ion-img [src]="lugar.ImagenURL"> </ion-img></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-title class="ion-text-center">
+              {{lugar.Titulo}}
+            </ion-title></ion-col
+          >
+        </ion-row>
+      </ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-list *ngIf="lugar.Comentario.length  > 0; else NoComentarios">
+            <ion-item *ngFor="let comentario of lugar.Comentario">
+              <ion-label>{{comentario}}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ng-template #NoComentarios>
+            <ion-text>
+              <p class="ion-text-center">No comentarios</p>
+            </ion-text>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
