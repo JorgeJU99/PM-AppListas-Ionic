@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { LugaresService } from '../Service/lugares.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sitios } from '../lugares/Entidades/Sitio';
+import { EditarLugarComponent } from '../editar-lugar/editar-lugar.component';
+import { EditarComentarioComponent } from '../editar-comentario/editar-comentario.component';
 
 @Component({
   selector: 'app-detalle-lugar',
@@ -11,9 +13,11 @@ import { Sitios } from '../lugares/Entidades/Sitio';
 })
 export class DetalleLugarPage implements OnInit {
   lugar: Sitios;
+  comentario = '';
 
   constructor(
-    private toastController: ToastController,
+    private alertController: AlertController,
+    private modalController: ModalController,
     private lugaresService: LugaresService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -30,16 +34,32 @@ export class DetalleLugarPage implements OnInit {
     });
   }
 
+  editarLugar() {
+    this.editarLugarModal();
+  }
+
   eliminarLugar() {
     this.lugaresService.deleteLugar(this.lugar.Codigo);
     this.router.navigate(['/lugares']);
   }
 
-  async notificacionEliminar() {
-    const toast = await this.toastController.create({
+  addComentario(comentario: string) {
+    this.lugaresService.addComentario(this.lugar.Codigo, comentario);
+    this.comentario = '';
+  }
+
+  editarComentario(id: number, comentario: string) {
+    this.editarComentarioModal(id, comentario);
+  }
+
+  ionViewWillEnter() {
+    this.getLugarByCodigo();
+  }
+
+  async alertaEliminar() {
+    const alert = await this.alertController.create({
       header: 'Eliminar lugar',
       message: 'Desea eliminar el lugar?',
-      duration: 2000,
       buttons: [
         {
           text: 'Eliminar',
@@ -50,6 +70,38 @@ export class DetalleLugarPage implements OnInit {
         { text: 'Cancelar', role: 'cancel' },
       ],
     });
-    toast.present();
+    alert.present();
+  }
+
+  async editarLugarModal() {
+    const modal = await this.modalController.create({
+      component: EditarLugarComponent,
+      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.5, 1],
+      componentProps: {
+        codigo: this.lugar.Codigo,
+      },
+    });
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter();
+    });
+    return await modal.present();
+  }
+
+  async editarComentarioModal(id: number, comentario: string) {
+    const modal = await this.modalController.create({
+      component: EditarComentarioComponent,
+      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.5, 1],
+      componentProps: {
+        index: id,
+        comentarios: comentario,
+        codigo: this.lugar.Codigo,
+      },
+    });
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter();
+    });
+    return await modal.present();
   }
 }

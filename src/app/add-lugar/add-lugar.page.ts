@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-lugar',
   templateUrl: './add-lugar.page.html',
-  styleUrls: ['./add-lugar.page.scss'],
 })
 export class AddLugarPage implements OnInit {
   lugar: string;

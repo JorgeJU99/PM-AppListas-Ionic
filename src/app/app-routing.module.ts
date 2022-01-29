@@ -26,7 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'add-lugar',
-    loadChildren: () => import('./add-lugar/add-lugar.module').then( m => m.AddLugarPageModule)
+    loadChildren: () =>
+      import('./add-lugar/add-lugar.module').then((m) => m.AddLugarPageModule),
   },
 ];
 

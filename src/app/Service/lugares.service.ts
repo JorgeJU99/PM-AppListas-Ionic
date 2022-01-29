@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -56,6 +57,28 @@ export class LugaresService {
       ImagenURL: imagenURL,
       Comentario: [],
     });
+  }
+
+  addComentario(codigo: string, comentario: string) {
+    for (const lista of this.Lista) {
+      if (lista.Codigo === codigo) {
+        lista.Comentario.push(comentario);
+      }
+    }
+  }
+
+  updateLugar(datos: Sitios[]) {
+    for (let index = 0; index < this.Lista.length; index++) {
+      if (this.Lista[index].Codigo === datos[0].Codigo) {
+        this.Lista.splice(index, 1, datos[0]);
+      }
+    }
+  }
+
+  updateComentario(comentarioNuevo: string, codigo: string, index: number) {
+    const lugar = [];
+    lugar.push(this.getLugarByCodigo(codigo));
+    lugar[0].Comentario.splice(index, 1, comentarioNuevo);
   }
 
   deleteLugar(codigo: string) {

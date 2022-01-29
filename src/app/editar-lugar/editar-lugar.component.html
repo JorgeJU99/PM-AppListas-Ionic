@@ -1,0 +1,41 @@
+<section>
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Editar Lugar</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Cancelar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content fullscreen>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Lugar</ion-label>
+          <ion-input
+            placeholder="Ingrese el nombre del lugar"
+            type="text"
+            [(ngModel)]="lugar"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Imagen</ion-label>
+          <ion-input
+            placeholder="Ingrese la URL de la imagen"
+            type="text"
+            [(ngModel)]="imagen"
+          ></ion-input>
+        </ion-item>
+        <ion-button
+          expand="block"
+          fill="clear"
+          shape="round"
+          (click)="alertaEditar(lugar, imagen)"
+        >
+          Editar
+        </ion-button>
+      </ion-card-content>
+    </ion-card></ion-content
+  >
+</section>

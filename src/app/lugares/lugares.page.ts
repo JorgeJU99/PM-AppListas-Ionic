@@ -12,7 +12,7 @@ import { Sitios } from './Entidades/Sitio';
 })
 export class LugaresPage implements OnInit {
   ListaSitios: Sitios[];
-  constructor(private router: Router, private Oser: LugaresService) {}
+  constructor(private router: Router, private lugaresService: LugaresService) {}
 
   goToHome() {}
 
@@ -21,11 +21,14 @@ export class LugaresPage implements OnInit {
   }
 
   ngOnInit() {
-    this.ListaSitios = this.Oser.getLugares();
-    console.log(this.Oser.getLugares());
+    this.getLugares();
   }
 
-  /* recargarLista() {
-    this.ListaSitios = this.Oser.getLugares();
-  } */
+  getLugares() {
+    this.ListaSitios = this.lugaresService.getLugares();
+  }
+
+  ionViewWillEnter() {
+    this.getLugares();
+  }
 }
